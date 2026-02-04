@@ -1,0 +1,56 @@
+{
+  "name": "@anthropic/tudat-wasm",
+  "version": "0.1.0",
+  "description": "Tudat astrodynamics library compiled to WebAssembly for browser and Node.js",
+  "main": "dist/tudat_wasm.js",
+  "module": "dist/tudat_wasm.mjs",
+  "types": "dist/tudat.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/tudat_wasm.mjs",
+      "require": "./dist/tudat_wasm.js",
+      "types": "./dist/tudat.d.ts"
+    }
+  },
+  "files": [
+    "dist/",
+    "README.md"
+  ],
+  "scripts": {
+    "docs": "typedoc --options typedoc.json"
+  },
+  "keywords": [
+    "astrodynamics",
+    "space",
+    "orbital-mechanics",
+    "simulation",
+    "tudat",
+    "wasm",
+    "webassembly",
+    "ephemeris",
+    "propagation",
+    "satellite",
+    "orbit"
+  ],
+  "author": "Tudat Development Team",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anthropics/tudat-wasm.git"
+  },
+  "homepage": "https://anthropics.github.io/tudat-wasm/",
+  "bugs": {
+    "url": "https://github.com/anthropics/tudat-wasm/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "typedoc": "^0.25.0",
+    "typescript": "^5.0.0"
+  },
+  "browser": {
+    "fs": false,
+    "path": false
+  }
+}

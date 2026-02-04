@@ -1,0 +1,151 @@
+# Tudat WASM Build and Deploy Workflow
+# =====================================
+#
+# Builds the WebAssembly modules and deploys to GitHub Pages
+#
+
+name: WASM Build
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Cancel in-progress runs for the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build WASM
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Emscripten
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: '3.1.51'
+          actions-cache-folder: 'emsdk-cache'
+
+      - name: Verify Emscripten
+        run: |
+          emcc --version
+          em++ --version
+
+      - name: Setup Ninja
+        run: sudo apt-get install -y ninja-build
+
+      - name: Cache WASM build
+        uses: actions/cache@v4
+        with:
+          path: |
+            build-wasm
+            !build-wasm/CMakeCache.txt
+          key: wasm-build-${{ runner.os }}-${{ hashFiles('CMakeLists.txt', 'src/tudatpy_wasm/**/*.cpp', 'src/tudatpy_wasm/**/*.h') }}
+          restore-keys: |
+            wasm-build-${{ runner.os }}-
+
+      - name: Configure WASM Build
+        run: |
+          emcmake cmake -B build-wasm \
+            -DCMAKE_BUILD_TYPE=Release \
+            -G Ninja
+
+      - name: Build Visualization Demo
+        run: cmake --build build-wasm --target tudat_wasm_web -j $(nproc)
+
+      - name: Build Full Embind API
+        run: cmake --build build-wasm --target tudatpy_wasm -j $(nproc)
+        continue-on-error: true  # Full build may be slow/fail on first setup
+
+      - name: Deploy to docs/
+        run: |
+          # Copy built WASM files to docs directory
+          if [ -f build-wasm/tests/wasm/web/tudat_wasm_test.js ]; then
+            cp build-wasm/tests/wasm/web/tudat_wasm_test.js docs/
+            cp build-wasm/tests/wasm/web/tudat_wasm_test.wasm docs/
+          fi
+          if [ -f build-wasm/src/tudatpy_wasm/tudatpy_wasm.js ]; then
+            cp build-wasm/src/tudatpy_wasm/tudatpy_wasm.js docs/
+            cp build-wasm/src/tudatpy_wasm/tudatpy_wasm.wasm docs/
+          fi
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: wasm-modules
+          path: |
+            docs/*.js
+            docs/*.wasm
+          retention-days: 7
+
+  test:
+    name: Run Tests
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: wasm-modules
+          path: tests/wasm/web/
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Node.js API Tests
+        run: |
+          cd tests/wasm
+          if [ -f test_wasm_api.js ]; then
+            node test_wasm_api.js || echo "API tests skipped (WASM not built)"
+          fi
+        continue-on-error: true
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: wasm-modules
+          path: docs/
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

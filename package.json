@@ -1,0 +1,26 @@
+{
+  "name": "tudat-wasm-dev",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Tudat astrodynamics library for WebAssembly - Development",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "build:wasm": "cmake -P wasm.cmake",
+    "build:wasm:full": "cmake -DFULL_BUILD=1 -P wasm.cmake",
+    "test": "node tests/wasm/test_wasm_api.js",
+    "npm:build": "cmake --build build-wasm --target npm_build",
+    "npm:publish": "cd npm && npm publish --access public"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tudat-team/tudat-wasm.git"
+  },
+  "author": "Tudat Development Team",
+  "license": "BSD-3-Clause"
+}

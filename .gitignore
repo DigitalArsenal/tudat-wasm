@@ -1,0 +1,101 @@
+# Dependencies (installed by cmake)
+packages/
+
+# WebAssembly / Emscripten build related
+.emsdk/
+build-wasm/
+build/
+build-*/
+
+# Generated WASM files (except in docs/ for GitHub Pages)
+*.wasm
+*.wasm.map
+*.js.map
+*.data
+!docs/*.wasm
+!docs/*.js
+
+# Node.js
+node_modules/
+package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+
+# NPM package build outputs
+dist/
+*.tgz
+
+# IDE and editor files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.project
+.cproject
+.settings/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+CMakeScripts/
+_CPack_Packages/
+CPackConfig.cmake
+CPackSourceConfig.cmake
+install_manifest.txt
+
+# Compiled object files
+*.o
+*.obj
+*.lo
+*.slo
+
+# Precompiled headers
+*.gch
+*.pch
+
+# Compiled libraries
+*.a
+*.lib
+*.la
+*.lai
+*.so
+*.dylib
+*.dll
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.egg-info/
+.eggs/
+
+# Documentation build output
+docs/api/
+!docs/index.html
+!docs/.nojekyll
+
+# Test artifacts
+tests/wasm/web/*.wasm
+tests/wasm/web/*.js
+!tests/wasm/web/app.js
+!tests/wasm/web/testWorker.js
+
+# Agent working notes
+Agents.md
