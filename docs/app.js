@@ -2281,9 +2281,9 @@ class TudatTestRunner {
         this.orbitEntities.push(atmosphereEntity);
     }
 
-    // Add integrator comparison visualization: SGP4 vs Full Force Model Propagation
+    // Add integrator comparison visualization: J2 vs Full Force Model Propagation
     // Uses actual Tudat library via Emscripten bindings
-    // SGP4 is the simplified perturbations model used for TLE propagation
+    // J2 is the J2-only oblateness perturbation model
     // Full force model (VCM-like) uses RK78 with:
     //   - Geopotential: J2, J3, J4 zonal harmonics
     //   - Third-body: Sun and Moon gravitational perturbations
@@ -2324,7 +2324,7 @@ class TudatTestRunner {
             }
         }
 
-        // Fallback to JavaScript Kepler vs RK4 if SGP4 not available
+        // Fallback to JavaScript Kepler vs RK4 if Tudat not available
         if (!ephemerisData) {
             this.log('Using JavaScript fallback (Kepler vs RK4)', 'warning');
             const semiMajorAxis = 7200;
@@ -2336,15 +2336,15 @@ class TudatTestRunner {
             const analyticalEph = this.computeKeplerOrbitJS(semiMajorAxis, eccentricity, inclination, raan, argPeriapsis, totalTime, numSamples);
             const numericalEph = this.computeNumericalOrbitJS(semiMajorAxis, eccentricity, inclination, raan, argPeriapsis, totalTime, numSamples, period);
 
-            // Convert to SGP4vsJ2 format: [t, sgp4_x, sgp4_y, sgp4_z, j2_x, j2_y, j2_z, ...]
+            // Convert to format: [t, j2_x, j2_y, j2_z, fullForce_x, fullForce_y, fullForce_z, ...]
             ephemerisData = [];
             for (let i = 0; i < numSamples; i++) {
                 const idx = i * 4;
                 ephemerisData.push(analyticalEph[idx]);      // t
-                ephemerisData.push(analyticalEph[idx + 1]);  // sgp4 x (using analytical as proxy)
+                ephemerisData.push(analyticalEph[idx + 1]);  // j2 x (using analytical as proxy)
                 ephemerisData.push(analyticalEph[idx + 2]);
                 ephemerisData.push(analyticalEph[idx + 3]);
-                ephemerisData.push(numericalEph[idx + 1]);   // j2 x (using numerical as proxy)
+                ephemerisData.push(numericalEph[idx + 1]);   // full force x (using numerical as proxy)
                 ephemerisData.push(numericalEph[idx + 2]);
                 ephemerisData.push(numericalEph[idx + 3]);
             }
@@ -2354,24 +2354,24 @@ class TudatTestRunner {
         const clock = this.viewer.clock;
         const startTime = clock.startTime;
 
-        const sgp4Positions = new Cesium.SampledPositionProperty();
-        sgp4Positions.setInterpolationOptions({
-            interpolationDegree: 5,
-            interpolationAlgorithm: Cesium.LagrangePolynomialApproximation
-        });
-
         const j2Positions = new Cesium.SampledPositionProperty();
         j2Positions.setInterpolationOptions({
             interpolationDegree: 5,
             interpolationAlgorithm: Cesium.LagrangePolynomialApproximation
         });
 
-        // Build reference orbit from first orbit of SGP4 data
+        const fullForcePositions = new Cesium.SampledPositionProperty();
+        fullForcePositions.setInterpolationOptions({
+            interpolationDegree: 5,
+            interpolationAlgorithm: Cesium.LagrangePolynomialApproximation
+        });
+
+        // Build reference orbit from first orbit of J2 data
         const orbitPositions = [];
         const samplesPerOrbit = Math.floor(numSamples / numOrbits);
 
         // Populate position properties from ephemeris arrays
-        // Format: [t, sgp4_x, sgp4_y, sgp4_z, j2_x, j2_y, j2_z, ...]
+        // Format: [t, j2_x, j2_y, j2_z, fullForce_x, fullForce_y, fullForce_z, ...]
         const separationData = [];
         let maxSep = 0;
 
@@ -2380,23 +2380,23 @@ class TudatTestRunner {
             const t = ephemerisData[idx];
             const sampleTime = Cesium.JulianDate.addSeconds(startTime, t, new Cesium.JulianDate());
 
-            const sgp4Pos = new Cesium.Cartesian3(
+            const j2Pos = new Cesium.Cartesian3(
                 ephemerisData[idx + 1],
                 ephemerisData[idx + 2],
                 ephemerisData[idx + 3]
             );
-            const j2Pos = new Cesium.Cartesian3(
+            const fullForcePos = new Cesium.Cartesian3(
                 ephemerisData[idx + 4],
                 ephemerisData[idx + 5],
                 ephemerisData[idx + 6]
             );
 
-            sgp4Positions.addSample(sampleTime, sgp4Pos);
             j2Positions.addSample(sampleTime, j2Pos);
+            fullForcePositions.addSample(sampleTime, fullForcePos);
 
             // First orbit for reference line
             if (i < samplesPerOrbit) {
-                orbitPositions.push(sgp4Pos);
+                orbitPositions.push(j2Pos);
             }
 
             // Compute separation
@@ -2425,12 +2425,12 @@ class TudatTestRunner {
         });
         this.orbitEntities.push(refOrbit);
 
-        // Add SGP4 satellite (cyan)
-        const sgp4Sat = this.viewer.entities.add({
-            name: 'SGP4 (TLE)',
-            description: `SGP4 simplified perturbations\nUsed for TLE propagation\nIncludes simplified J2, drag`,
-            position: sgp4Positions,
-            orientation: new Cesium.VelocityOrientationProperty(sgp4Positions),
+        // Add J2 satellite (cyan)
+        const j2Sat = this.viewer.entities.add({
+            name: 'J2 Only',
+            description: `J2 oblateness perturbation only\n${numOrbits} orbits propagated`,
+            position: j2Positions,
+            orientation: new Cesium.VelocityOrientationProperty(j2Positions),
             point: {
                 pixelSize: 12,
                 color: Cesium.Color.CYAN,
@@ -2448,21 +2448,21 @@ class TudatTestRunner {
                 })
             },
             label: {
-                text: 'SGP4',
+                text: 'J2',
                 font: '12px monospace',
                 fillColor: Cesium.Color.CYAN,
                 pixelOffset: new Cesium.Cartesian2(0, -15)
             },
             viewFrom: new Cesium.Cartesian3(-50000, 0, -20000)
         });
-        this.orbitEntities.push(sgp4Sat);
+        this.orbitEntities.push(j2Sat);
 
-        // Add J2 numerical satellite (lime green)
-        const j2Sat = this.viewer.entities.add({
-            name: 'J2 Numerical',
-            description: `RK4 numerical integration\nwith J2 oblateness perturbation\n${numOrbits} orbits propagated`,
-            position: j2Positions,
-            orientation: new Cesium.VelocityOrientationProperty(j2Positions),
+        // Add Full Force satellite (lime green)
+        const fullForceSat = this.viewer.entities.add({
+            name: 'Full Force',
+            description: `Full force model propagation\nIncludes all perturbations\n${numOrbits} orbits propagated`,
+            position: fullForcePositions,
+            orientation: new Cesium.VelocityOrientationProperty(fullForcePositions),
             point: {
                 pixelSize: 12,
                 color: Cesium.Color.LIME,
@@ -2480,13 +2480,13 @@ class TudatTestRunner {
                 })
             },
             label: {
-                text: 'J2 Num',
+                text: 'Full Force',
                 font: '12px monospace',
                 fillColor: Cesium.Color.LIME,
                 pixelOffset: new Cesium.Cartesian2(0, -15)
             }
         });
-        this.orbitEntities.push(j2Sat);
+        this.orbitEntities.push(fullForceSat);
 
         // Create separation chart
         this.createSeparationChart(separationData, totalTime, startTime);
