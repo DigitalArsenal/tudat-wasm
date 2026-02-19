@@ -46,6 +46,11 @@ jobs:
       - name: Setup Ninja
         run: sudo apt-get install -y ninja-build
 
+      - name: Fetch Emscripten Boost port
+        run: |
+          embuilder build boost_headers
+          echo "EMSDK_SYSROOT=$(em-config CACHE)/sysroot" >> $GITHUB_ENV
+
       - name: Cache WASM build
         uses: actions/cache@v4
         with:
@@ -60,7 +65,9 @@ jobs:
         run: |
           emcmake cmake -B build-wasm \
             -DCMAKE_BUILD_TYPE=Release \
-            -G Ninja
+            -G Ninja \
+            -DBoost_INCLUDE_DIR=${{ env.EMSDK_SYSROOT }}/include \
+            -DBOOST_ROOT=${{ env.EMSDK_SYSROOT }}
 
       - name: Build Visualization Demo
         run: cmake --build build-wasm --target tudat_wasm_web -j $(nproc)

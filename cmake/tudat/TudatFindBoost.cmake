@@ -17,6 +17,23 @@ set(Boost_USE_STATIC_RUNTIME OFF)
 # Tudat needs can work header-only or with Emscripten's threading model
 if(CMAKE_SYSTEM_NAME STREQUAL "Emscripten" OR EMSCRIPTEN OR TUDAT_BUILD_WASM)
     message(STATUS "WASM build: Using Boost headers only")
+    # Auto-detect Boost from Emscripten sysroot if not already set
+    # (e.g. when using emcmake instead of the project's custom toolchain)
+    if(NOT Boost_INCLUDE_DIR)
+        # Derive sysroot from the compiler path (always set by Emscripten's toolchain)
+        # e.g. .../upstream/emscripten/emcc -> .../upstream/emscripten/cache/sysroot
+        get_filename_component(_EM_ROOT "${CMAKE_C_COMPILER}" DIRECTORY)
+        set(_EM_SYSROOT "${_EM_ROOT}/cache/sysroot")
+        if(EXISTS "${_EM_SYSROOT}/include/boost")
+            set(Boost_INCLUDE_DIR "${_EM_SYSROOT}/include")
+            set(BOOST_ROOT "${_EM_SYSROOT}")
+            set(Boost_NO_SYSTEM_PATHS ON)
+            set(Boost_NO_BOOST_CMAKE ON)
+            message(STATUS "Auto-detected Boost from Emscripten sysroot: ${Boost_INCLUDE_DIR}")
+        endif()
+        unset(_EM_ROOT)
+        unset(_EM_SYSROOT)
+    endif()
     # Lower minimum version for WASM since we only need headers
     find_package(Boost 1.67.0 QUIET REQUIRED)
     # Skip looking for compiled Boost libraries - set them as found
