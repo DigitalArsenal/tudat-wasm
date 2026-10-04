@@ -1085,9 +1085,9 @@
         @media (max-width: 1100px) { .sdn-header .status-extra { display: none; } }
 
         /* The overview: the reel over the app, shown on a first visit. */
-        .intro { position: fixed; inset: 0; z-index: 8000; display: flex; flex-direction: column; align-items: center; overflow-y: auto; padding: calc(var(--sdn-stack-header-height, 52px) + 5vh) 24px 0; background: rgba(0, 0, 0, 0.9); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; text-align: center; }
+        .intro { position: fixed; inset: 0; z-index: 8000; display: flex; flex-direction: column; align-items: center; overflow-y: auto; padding: var(--sdn-stack-header-height, 52px) 24px 0; background: rgba(0, 0, 0, 0.9); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; text-align: center; }
         .intro[hidden] { display: none; }
-        .intro-inner { width: 100%; max-width: 1120px; flex: none; }
+        .intro-inner { width: 100%; max-width: 1120px; flex: none; padding-top: 5vh; }
         .intro .sdn-stack, .intro .sdn-footer { width: 100%; flex: none; }
         .intro .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #f5a524; margin-bottom: 14px; }
         .intro h1 { font-size: clamp(40px, 7vw, 76px); font-weight: 700; letter-spacing: -.03em; line-height: 1.04; color: #f5f5f7; margin-bottom: 14px; }
@@ -1103,7 +1103,7 @@
 </head>
 <body>
     <section class="intro" id="intro" aria-labelledby="intro-title" hidden>
-        <div class="intro-inner">
+        <div class="intro-inner" data-sdn-hero>
             <p class="eyebrow">Tudat WASM</p>
             <h1 id="intro-title">Spaceflight math in your browser</h1>
             <p class="lede">The TU Delft Astrodynamics Toolbox, compiled to WebAssembly.</p>
