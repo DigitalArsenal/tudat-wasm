@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-sdn-light="invert">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/sdn-chrome/sdn-chrome.css">
+    <script src="assets/sdn-chrome/sdn-chrome.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TUDAT // WASM Embind Test Suite</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23000000' stroke='%23f5a524' stroke-width='2'/><ellipse cx='50' cy='50' rx='30' ry='10' fill='none' stroke='%23f5a524' stroke-width='1.5' transform='rotate(-25 50 50)'/><ellipse cx='50' cy='50' rx='30' ry='10' fill='none' stroke='%2359d9ff' stroke-width='1.5' transform='rotate(35 50 50)'/><circle cx='50' cy='50' r='6' fill='%23f5a524'/></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none'><defs><linearGradient id='t' gradientUnits='userSpaceOnUse' x1='16' y1='29' x2='16' y2='3'><stop offset='0' stop-color='%23f5a524' stop-opacity='0'/><stop offset='.55' stop-color='%23f5a524' stop-opacity='.55'/><stop offset='1' stop-color='%23f5a524'/></linearGradient></defs><circle cx='16' cy='16' r='13' stroke='%23f5f5f7' stroke-width='1.6' opacity='.3'/><path d='M16 29A13 13 0 0 1 16 3' stroke='url(%23t)' stroke-width='2.2' stroke-linecap='round'/><path d='M16 10.2L10.4 20.1H21.6Z' stroke='%23f5f5f7' stroke-width='1.6' stroke-linejoin='round'/><circle cx='16' cy='10.2' r='2.6' fill='%23f5f5f7'/><circle cx='10.4' cy='20.1' r='2.6' fill='%23f5f5f7'/><circle cx='21.6' cy='20.1' r='2.6' fill='%23f5f5f7'/><circle cx='16' cy='3' r='2.5' fill='%23f5a524'/></svg>">
     <!-- CesiumJS (CDN) -->
     <script>window.CESIUM_BASE_URL = 'https://cesium.com/downloads/cesiumjs/releases/1.136/Build/Cesium/';</script>
     <script src="https://cesium.com/downloads/cesiumjs/releases/1.136/Build/Cesium/Cesium.js"></script>
@@ -106,63 +108,7 @@
         }
 
         /* Header */
-        .header {
-            grid-column: 1 / -1;
-            background: var(--bg-deep);
-            padding: 12px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border-glow);
-            position: relative;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .logo-icon {
-            width: 48px;
-            height: 48px;
-            position: relative;
-        }
-
-        .logo-icon svg {
-            width: 100%;
-            height: 100%;
-            filter: drop-shadow(0 0 8px var(--cyan-glow));
-        }
-
-        .logo-text {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-            font-weight: 700;
-            font-size: 24px;
-            letter-spacing: 4px;
-            background: linear-gradient(135deg, var(--cyan), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .logo-subtitle {
-            font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
-            font-size: 10px;
-            color: var(--text-dim);
-            letter-spacing: 3px;
-            margin-top: 2px;
-        }
+        
 
         .header-status {
             display: flex;
@@ -203,36 +149,7 @@
         }
 
         /* Header links */
-        .header-links {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
-
-        .header-link {
-            font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
-            font-size: 12px;
-            color: var(--cyan);
-            text-decoration: none;
-            padding: 6px 12px;
-            border: 1px solid var(--border-glow);
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .header-link:hover {
-            background: rgba(245, 165, 36, 0.1);
-            border-color: var(--cyan);
-            box-shadow: 0 0 10px var(--cyan-glow);
-        }
-
-        .header-link svg {
-            width: 14px;
-            height: 14px;
-            fill: currentColor;
-        }
+        
 
         /* Panels */
         .panel {
@@ -751,7 +668,6 @@
             fill: var(--cyan) !important;
         }
 
-
         .cesium-viewer-infoBoxContainer {
             top: 50px !important;
             right: 10px !important;
@@ -1160,14 +1076,19 @@
         }
 
         /* Space Data Network style guide layer (spacedatanetwork.org/style-guide.html). */
-        .header { -webkit-user-select: none; user-select: none; }
-        .header::before { background: linear-gradient(90deg, transparent, rgba(245, 165, 36, 0.6), transparent); }
-        .logo-icon svg { filter: none; }
+        
+
+        /* The shared bar (assets/sdn-chrome/) heads the app grid and carries the run status. */
+        .app-container > .sdn-header { grid-column: 1 / -1; }
+        .sdn-header .header-status { gap: 16px; margin-right: 8px; }
+        .sdn-header .status-item { font-size: 12px; white-space: nowrap; }
+        @media (max-width: 1100px) { .sdn-header .status-extra { display: none; } }
 
         /* The overview: the reel over the app, shown on a first visit. */
-        .intro { position: fixed; inset: 0; z-index: 8000; display: flex; justify-content: center; align-items: flex-start; overflow-y: auto; padding: 7vh 24px 48px; background: rgba(0, 0, 0, 0.9); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; text-align: center; }
+        .intro { position: fixed; inset: 0; z-index: 8000; display: flex; flex-direction: column; align-items: center; overflow-y: auto; padding: calc(var(--sdn-stack-header-height, 52px) + 5vh) 24px 0; background: rgba(0, 0, 0, 0.9); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; text-align: center; }
         .intro[hidden] { display: none; }
-        .intro-inner { width: 100%; max-width: 1120px; }
+        .intro-inner { width: 100%; max-width: 1120px; flex: none; }
+        .intro .sdn-stack, .intro .sdn-footer { width: 100%; flex: none; }
         .intro .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #f5a524; margin-bottom: 14px; }
         .intro h1 { font-size: clamp(40px, 7vw, 76px); font-weight: 700; letter-spacing: -.03em; line-height: 1.04; color: #f5f5f7; margin-bottom: 14px; }
         .intro .lede { font-size: clamp(17px, 2vw, 21px); color: rgba(245, 245, 247, .78); margin-bottom: 26px; }
@@ -1177,7 +1098,6 @@
         .intro .pill-btn.primary { background: #f5f5f7; color: #000; border-color: #f5f5f7; }
         .intro-actions:hover .pill-btn.primary:not(:hover) { background: rgba(28, 28, 30, .72); color: #f5f5f7; border-color: rgba(255, 255, 255, .22); }
         .intro .pill-btn:hover { background: #f5f5f7; color: #000; border-color: #f5f5f7; }
-        button.header-link { background: none; line-height: inherit; letter-spacing: inherit; cursor: pointer; }
     </style>
     <link rel="stylesheet" href="media/reel/reel.css">
 </head>
@@ -1200,65 +1120,48 @@
                 <a class="pill-btn" href="https://docs.tudat.space/" target="_blank" rel="noopener">Tudat documentation</a>
             </div>
         </div>
+        <section id="stack" data-sdn-stack="tudat"></section>
+        <footer class="sdn-footer">
+            <div class="sdn-footer-inner">
+                <a class="sdn-footer-brand" href="https://spacedatanetwork.org/">Space Data Network</a>
+                <nav class="sdn-footer-links" aria-label="Footer">
+                    <a href="api/index.html">API docs</a>
+                    <a href="https://docs.tudat.space/">Tudat docs</a>
+                    <a href="https://github.com/tudat-team/tudatpy">tudatpy</a>
+                    <a href="https://github.com/DigitalArsenal/tudat-wasm">GitHub</a>
+                </nav>
+                <p class="sdn-footer-legal">BSD-3-Clause License &middot; Tudat &copy; Delft University of Technology; WebAssembly build &copy; Edgesource Corporation &middot; <a href="mailto:tj@edgesource.com">tj@edgesource.com</a></p>
+            </div>
+        </footer>
     </section>
     <div class="app-container">
         <!-- Header -->
-        <header class="header">
-            <div class="logo">
-                <div class="logo-icon">
-                    <svg viewBox="0 0 100 100">
-                        <defs>
-                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#f5a524;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#59d9ff;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <circle cx="50" cy="50" r="45" fill="none" stroke="url(#grad1)" stroke-width="2"/>
-                        <ellipse cx="50" cy="50" rx="32" ry="12" fill="none" stroke="#f5a524" stroke-width="1.5" transform="rotate(-25 50 50)" opacity="0.8"/>
-                        <ellipse cx="50" cy="50" rx="32" ry="12" fill="none" stroke="#59d9ff" stroke-width="1.5" transform="rotate(35 50 50)" opacity="0.8"/>
-                        <ellipse cx="50" cy="50" rx="32" ry="12" fill="none" stroke="#f5a524" stroke-width="1" transform="rotate(80 50 50)" opacity="0.5"/>
-                        <circle cx="50" cy="50" r="8" fill="#f5a524"/>
-                        <circle cx="50" cy="50" r="4" fill="#fff"/>
-                    </svg>
-                </div>
-                <div>
-                    <div class="logo-text">TUDAT</div>
-                    <div class="logo-subtitle">ASTRODYNAMICS TEST SUITE // EMBIND</div>
-                </div>
-            </div>
-            <div class="header-links">
-                <button type="button" class="header-link" data-intro-open title="Overview">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
-                    OVERVIEW
-                </button>
-                <a href="api/index.html" target="_blank" class="header-link" title="API Documentation">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
-                    DOCS
-                </a>
-                <a href="https://docs.tudat.space/" target="_blank" class="header-link" title="Tudat Documentation">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-                    TUDAT
-                </a>
-                <a href="https://github.com/tudat-team/tudatpy" target="_blank" class="header-link" title="GitHub Repository">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    GITHUB
-                </a>
-                <a href="mailto:tj@edgesource.com" class="header-link" title="Contact">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 2v.51l-8 5.33-8-5.33V6h16zM4 18V8.9l7.45 4.97a1 1 0 0 0 1.1 0L20 8.9V18H4z"/></svg>
-                    TJ@EDGESOURCE.COM
-                </a>
-            </div>
-            <div class="header-status">
-                <div class="status-item">
-                    <div class="status-dot loading" id="wasm-dot"></div>
-                    <span id="wasm-status">INITIALIZING</span>
-                </div>
-                <div class="status-item">
-                    <span>BUILD: EMBIND</span>
-                    <span id="app-build" style="margin-left: 8px; opacity: 0.7;"></span>
-                </div>
-                <div class="status-item">
-                    <span id="timestamp"></span>
+        <header class="sdn-header sdn-header-inflow">
+            <div class="sdn-header-inner">
+                <a class="sdn-header-brand" href="./"><span>Tudat WASM</span></a>
+                <nav class="sdn-header-links" aria-label="Site">
+                    <a href="#overview" data-intro-open>Overview</a>
+                    <a href="api/index.html" target="_blank">API docs</a>
+                    <a href="https://docs.tudat.space/" target="_blank" rel="noopener">Tudat docs</a>
+                    <a href="#stack" data-intro-stack>Stack</a>
+                    <a href="https://github.com/tudat-team/tudatpy" target="_blank" rel="noopener">GitHub</a>
+                </nav>
+                <div class="sdn-header-actions">
+                    <div class="header-status">
+                        <div class="status-item">
+                            <div class="status-dot loading" id="wasm-dot"></div>
+                            <span id="wasm-status">INITIALIZING</span>
+                        </div>
+                        <div class="status-item status-extra">
+                            <span>BUILD: EMBIND</span>
+                            <span id="app-build" style="margin-left: 8px; opacity: 0.7;"></span>
+                        </div>
+                        <div class="status-item status-extra">
+                            <span id="timestamp"></span>
+                        </div>
+                    </div>
+                    <button data-sdn-theme-toggle aria-label="Switch between light and dark theme"></button>
+                    <button data-sdn-menu-toggle aria-label="Menu"></button>
                 </div>
             </div>
         </header>
@@ -1456,7 +1359,12 @@
             var seen = false;
             try { seen = localStorage.getItem(KEY) === '1'; } catch (e) {}
             if (!seen) open();
-            document.querySelector('[data-intro-open]').addEventListener('click', open);
+            document.querySelector('[data-intro-open]').addEventListener('click', function (e) { e.preventDefault(); open(); });
+            document.querySelector('[data-intro-stack]').addEventListener('click', function (e) {
+                e.preventDefault();
+                open();
+                document.getElementById('stack').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
             intro.querySelector('[data-intro-close]').addEventListener('click', close);
             document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !intro.hidden) close(); });
         })();
