@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TUDAT // WASM Embind Test Suite</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23050a0f' stroke='%2300f0ff' stroke-width='2'/><ellipse cx='50' cy='50' rx='30' ry='10' fill='none' stroke='%2300f0ff' stroke-width='1.5' transform='rotate(-25 50 50)'/><ellipse cx='50' cy='50' rx='30' ry='10' fill='none' stroke='%238b5cf6' stroke-width='1.5' transform='rotate(35 50 50)'/><circle cx='50' cy='50' r='6' fill='%2300f0ff'/></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23000000' stroke='%23f5a524' stroke-width='2'/><ellipse cx='50' cy='50' rx='30' ry='10' fill='none' stroke='%23f5a524' stroke-width='1.5' transform='rotate(-25 50 50)'/><ellipse cx='50' cy='50' rx='30' ry='10' fill='none' stroke='%2359d9ff' stroke-width='1.5' transform='rotate(35 50 50)'/><circle cx='50' cy='50' r='6' fill='%23f5a524'/></svg>">
     <!-- CesiumJS (CDN) -->
     <script>window.CESIUM_BASE_URL = 'https://cesium.com/downloads/cesiumjs/releases/1.136/Build/Cesium/';</script>
     <script src="https://cesium.com/downloads/cesiumjs/releases/1.136/Build/Cesium/Cesium.js"></script>
@@ -12,32 +12,31 @@
     <!-- D3.js for 3D visualizations -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap');
 
         :root {
-            --bg-void: #020408;
-            --bg-deep: #050a0f;
-            --bg-panel: #0a1118;
-            --bg-card: #0d1620;
-            --bg-elevated: #111d2a;
+            --bg-void: #000000;
+            --bg-deep: #0b0b0c;
+            --bg-panel: #111113;
+            --bg-card: #161617;
+            --bg-elevated: #1c1c1e;
 
-            --cyan: #00f0ff;
-            --cyan-dim: #00a0aa;
-            --cyan-glow: rgba(0, 240, 255, 0.3);
-            --purple: #8b5cf6;
-            --purple-dim: #6d45d9;
-            --green: #00ff9d;
-            --green-dim: #00cc7d;
-            --red: #ff3366;
-            --orange: #ff9f1c;
-            --yellow: #ffd93d;
+            --cyan: #f5a524;
+            --cyan-dim: #c77d00;
+            --cyan-glow: rgba(245, 165, 36, 0.3);
+            --purple: #59d9ff;
+            --purple-dim: #3aa9c9;
+            --green: #f5a524;
+            --green-dim: #c77d00;
+            --red: #ff3b30;
+            --orange: #f5a524;
+            --yellow: #f5a524;
 
-            --text-primary: #e8f4f8;
-            --text-secondary: #7a9299;
-            --text-dim: #4a6066;
+            --text-primary: #f5f5f7;
+            --text-secondary: rgba(245, 245, 247, 0.72);
+            --text-dim: #8e8e93;
 
-            --border-glow: rgba(0, 240, 255, 0.2);
-            --scanline: rgba(0, 240, 255, 0.03);
+            --border-glow: rgba(255, 255, 255, 0.12);
+            --scanline: transparent;
         }
 
         * {
@@ -52,7 +51,7 @@
         }
 
         body {
-            font-family: 'Rajdhani', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
             background: var(--bg-void);
             color: var(--text-primary);
             font-size: 18px;
@@ -87,8 +86,8 @@
             width: 100%;
             height: 100%;
             background-image:
-                linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
             background-size: 50px 50px;
             pointer-events: none;
             z-index: -1;
@@ -147,7 +146,7 @@
         }
 
         .logo-text {
-            font-family: 'Orbitron', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
             font-weight: 700;
             font-size: 24px;
             letter-spacing: 4px;
@@ -158,7 +157,7 @@
         }
 
         .logo-subtitle {
-            font-family: 'Share Tech Mono', monospace;
+            font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 10px;
             color: var(--text-dim);
             letter-spacing: 3px;
@@ -175,7 +174,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-family: 'Share Tech Mono', monospace;
+            font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 14px;
             color: var(--text-secondary);
         }
@@ -211,7 +210,7 @@
         }
 
         .header-link {
-            font-family: 'Share Tech Mono', monospace;
+            font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 12px;
             color: var(--cyan);
             text-decoration: none;
@@ -224,7 +223,7 @@
         }
 
         .header-link:hover {
-            background: rgba(0, 240, 255, 0.1);
+            background: rgba(245, 165, 36, 0.1);
             border-color: var(--cyan);
             box-shadow: 0 0 10px var(--cyan-glow);
         }
@@ -254,7 +253,7 @@
         }
 
         .panel-title {
-            font-family: 'Orbitron', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
             font-size: 14px;
             font-weight: 600;
             letter-spacing: 2px;
@@ -334,7 +333,7 @@
         .search-input {
             width: 100%;
             padding: 8px 12px 8px 36px;
-            font-family: 'Share Tech Mono', monospace;
+            font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 13px;
             color: var(--text-primary);
             background: var(--bg-card);
@@ -397,7 +396,7 @@
 
         /* Search highlight for fuzzy matches */
         .search-highlight {
-            background: rgba(0, 240, 255, 0.3);
+            background: rgba(245, 165, 36, 0.3);
             color: var(--cyan);
             padding: 0 2px;
             border-radius: 2px;
@@ -437,7 +436,7 @@
         .stat-card.time::before { background: var(--purple); }
 
         .stat-label {
-            font-family: 'Share Tech Mono', monospace;
+            font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 12px;
             letter-spacing: 1px;
             color: var(--text-dim);
@@ -446,7 +445,7 @@
         }
 
         .stat-value {
-            font-family: 'Orbitron', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
             font-size: 36px;
             font-weight: 700;
             line-height: 1;
@@ -459,7 +458,7 @@
 
         /* Buttons */
         .btn {
-            font-family: 'Orbitron', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
             font-size: 14px;
             font-weight: 600;
             letter-spacing: 2px;
@@ -523,7 +522,7 @@
         }
 
         .progress-label {
-            font-family: 'Share Tech Mono', monospace;
+            font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 13px;
             color: var(--text-dim);
             letter-spacing: 1px;
@@ -608,19 +607,19 @@
         }
 
         .category-count {
-            font-family: 'Share Tech Mono', monospace;
+            font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 14px;
             padding: 2px 8px;
             border-radius: 2px;
         }
 
         .category-count.all-pass {
-            background: rgba(0, 255, 157, 0.2);
+            background: rgba(245, 165, 36, 0.2);
             color: var(--green);
         }
 
         .category-count.has-fail {
-            background: rgba(255, 51, 102, 0.2);
+            background: rgba(255, 59, 48, 0.2);
             color: var(--red);
         }
 
@@ -640,7 +639,7 @@
             align-items: center;
             gap: 8px;
             padding: 4px 0;
-            font-family: 'Share Tech Mono', monospace;
+            font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 13px;
         }
 
@@ -673,11 +672,11 @@
         }
 
         .test-item:hover {
-            background: rgba(0, 240, 255, 0.1);
+            background: rgba(245, 165, 36, 0.1);
         }
 
         .test-item.selected {
-            background: rgba(0, 240, 255, 0.2);
+            background: rgba(245, 165, 36, 0.2);
             border-left: 2px solid var(--cyan);
         }
 
@@ -759,7 +758,7 @@
         }
 
         .cesium-infoBox {
-            background: rgba(15, 23, 42, 0.95) !important;
+            background: rgba(11, 11, 12, 0.95) !important;
             border: 1px solid var(--border-glow) !important;
         }
 
@@ -790,7 +789,7 @@
         }
 
         .orbit-selector-title {
-            font-family: 'Orbitron', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
             font-size: 13px;
             font-weight: 500;
             letter-spacing: 1px;
@@ -821,17 +820,17 @@
 
         .orbit-btn:hover {
             border-color: var(--cyan);
-            background: rgba(0, 240, 255, 0.1);
+            background: rgba(245, 165, 36, 0.1);
         }
 
         .orbit-btn.active {
             border-color: var(--purple);
-            background: rgba(139, 92, 246, 0.2);
-            box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+            background: rgba(89, 217, 255, 0.2);
+            box-shadow: 0 0 10px rgba(89, 217, 255, 0.3);
         }
 
         .orbit-btn-name {
-            font-family: 'Orbitron', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
             font-size: 14px;
             font-weight: 600;
             color: var(--cyan);
@@ -844,7 +843,7 @@
         }
 
         .orbit-btn-desc {
-            font-family: 'Share Tech Mono', monospace;
+            font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 10px;
             color: var(--text-dim);
             line-height: 1.3;
@@ -864,16 +863,16 @@
             position: absolute;
             top: 10px;
             left: 10px;
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(11, 11, 12, 0.9);
             border: 1px solid var(--border-glow);
             padding: 10px 14px;
             z-index: 100;
-            font-family: 'Share Tech Mono', monospace;
+            font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             min-width: 160px;
         }
 
         .camera-info-title {
-            font-family: 'Orbitron', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
             font-size: 10px;
             font-weight: 500;
             letter-spacing: 1px;
@@ -911,7 +910,7 @@
         }
 
         .chart-title {
-            font-family: 'Orbitron', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
             font-size: 13px;
             font-weight: 500;
             letter-spacing: 1px;
@@ -927,7 +926,7 @@
 
         /* Right Panel - Console */
         .console-panel {
-            font-family: 'Share Tech Mono', monospace;
+            font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 14px;
         }
 
@@ -1010,7 +1009,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(2, 4, 8, 0.95);
+            background: rgba(0, 0, 0, 0.95);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1033,8 +1032,8 @@
             min-width: 400px;
             max-width: 500px;
             text-align: center;
-            box-shadow: 0 0 60px rgba(0, 240, 255, 0.3),
-                        inset 0 0 30px rgba(0, 240, 255, 0.05);
+            box-shadow: 0 0 60px rgba(245, 165, 36, 0.3),
+                        inset 0 0 30px rgba(245, 165, 36, 0.05);
             position: relative;
         }
 
@@ -1050,7 +1049,7 @@
         }
 
         .modal-title {
-            font-family: 'Orbitron', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
             font-size: 18px;
             font-weight: 600;
             color: var(--cyan);
@@ -1063,7 +1062,7 @@
         }
 
         .modal-progress-text {
-            font-family: 'Share Tech Mono', monospace;
+            font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 48px;
             font-weight: 700;
             color: var(--text-primary);
@@ -1074,7 +1073,7 @@
         }
 
         .modal-progress-label {
-            font-family: 'Share Tech Mono', monospace;
+            font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 20px;
             color: var(--text-secondary);
             margin-bottom: 16px;
@@ -1112,7 +1111,7 @@
         }
 
         .modal-stat-value {
-            font-family: 'Share Tech Mono', monospace;
+            font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 28px;
             font-weight: 600;
             font-variant-numeric: tabular-nums;
@@ -1136,7 +1135,7 @@
         }
 
         .modal-current-test {
-            font-family: 'Share Tech Mono', monospace;
+            font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 12px;
             color: var(--text-dim);
             white-space: nowrap;
@@ -1159,9 +1158,49 @@
             margin-right: 12px;
             vertical-align: middle;
         }
+
+        /* Space Data Network style guide layer (spacedatanetwork.org/style-guide.html). */
+        .header { -webkit-user-select: none; user-select: none; }
+        .header::before { background: linear-gradient(90deg, transparent, rgba(245, 165, 36, 0.6), transparent); }
+        .logo-icon svg { filter: none; }
+
+        /* The overview: the reel over the app, shown on a first visit. */
+        .intro { position: fixed; inset: 0; z-index: 8000; display: flex; justify-content: center; align-items: flex-start; overflow-y: auto; padding: 7vh 24px 48px; background: rgba(0, 0, 0, 0.9); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; text-align: center; }
+        .intro[hidden] { display: none; }
+        .intro-inner { width: 100%; max-width: 1120px; }
+        .intro .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #f5a524; margin-bottom: 14px; }
+        .intro h1 { font-size: clamp(40px, 7vw, 76px); font-weight: 700; letter-spacing: -.03em; line-height: 1.04; color: #f5f5f7; margin-bottom: 14px; }
+        .intro .lede { font-size: clamp(17px, 2vw, 21px); color: rgba(245, 245, 247, .78); margin-bottom: 26px; }
+        .intro .reel-frame { width: min(100%, 960px, max(560px, calc((100svh - 400px) * 16 / 9))); max-width: 100%; margin: 0 auto 26px; }
+        .intro-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .intro .pill-btn { display: inline-flex; align-items: center; padding: 13px 26px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .22); background: rgba(28, 28, 30, .72); color: #f5f5f7; font: 600 16px -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; text-decoration: none; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+        .intro .pill-btn.primary { background: #f5f5f7; color: #000; border-color: #f5f5f7; }
+        .intro-actions:hover .pill-btn.primary:not(:hover) { background: rgba(28, 28, 30, .72); color: #f5f5f7; border-color: rgba(255, 255, 255, .22); }
+        .intro .pill-btn:hover { background: #f5f5f7; color: #000; border-color: #f5f5f7; }
+        button.header-link { background: none; line-height: inherit; letter-spacing: inherit; cursor: pointer; }
     </style>
+    <link rel="stylesheet" href="media/reel/reel.css">
 </head>
 <body>
+    <section class="intro" id="intro" aria-labelledby="intro-title" hidden>
+        <div class="intro-inner">
+            <p class="eyebrow">Tudat WASM</p>
+            <h1 id="intro-title">Spaceflight math in your browser</h1>
+            <p class="lede">The TU Delft Astrodynamics Toolbox, compiled to WebAssembly.</p>
+            <figure class="reel-frame">
+                <div class="reel-stage">
+                    <video muted playsinline preload="auto" data-poster="media/tudat-reel-poster.webp" aria-label="Tudat WASM in 30 seconds, with music">
+                        <source src="media/tudat-reel.webm" type='video/webm; codecs="av01.0.08M.08"'>
+                        <source src="media/tudat-reel.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </figure>
+            <div class="intro-actions">
+                <button class="pill-btn primary" type="button" data-intro-close>Open the test suite</button>
+                <a class="pill-btn" href="https://docs.tudat.space/" target="_blank" rel="noopener">Tudat documentation</a>
+            </div>
+        </div>
+    </section>
     <div class="app-container">
         <!-- Header -->
         <header class="header">
@@ -1170,15 +1209,15 @@
                     <svg viewBox="0 0 100 100">
                         <defs>
                             <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                                <stop offset="0%" style="stop-color:#f5a524;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#59d9ff;stop-opacity:1" />
                             </linearGradient>
                         </defs>
                         <circle cx="50" cy="50" r="45" fill="none" stroke="url(#grad1)" stroke-width="2"/>
-                        <ellipse cx="50" cy="50" rx="32" ry="12" fill="none" stroke="#00f0ff" stroke-width="1.5" transform="rotate(-25 50 50)" opacity="0.8"/>
-                        <ellipse cx="50" cy="50" rx="32" ry="12" fill="none" stroke="#8b5cf6" stroke-width="1.5" transform="rotate(35 50 50)" opacity="0.8"/>
-                        <ellipse cx="50" cy="50" rx="32" ry="12" fill="none" stroke="#00ff9d" stroke-width="1" transform="rotate(80 50 50)" opacity="0.5"/>
-                        <circle cx="50" cy="50" r="8" fill="#00f0ff"/>
+                        <ellipse cx="50" cy="50" rx="32" ry="12" fill="none" stroke="#f5a524" stroke-width="1.5" transform="rotate(-25 50 50)" opacity="0.8"/>
+                        <ellipse cx="50" cy="50" rx="32" ry="12" fill="none" stroke="#59d9ff" stroke-width="1.5" transform="rotate(35 50 50)" opacity="0.8"/>
+                        <ellipse cx="50" cy="50" rx="32" ry="12" fill="none" stroke="#f5a524" stroke-width="1" transform="rotate(80 50 50)" opacity="0.5"/>
+                        <circle cx="50" cy="50" r="8" fill="#f5a524"/>
                         <circle cx="50" cy="50" r="4" fill="#fff"/>
                     </svg>
                 </div>
@@ -1188,6 +1227,10 @@
                 </div>
             </div>
             <div class="header-links">
+                <button type="button" class="header-link" data-intro-open title="Overview">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+                    OVERVIEW
+                </button>
                 <a href="api/index.html" target="_blank" class="header-link" title="API Documentation">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
                     DOCS
@@ -1397,5 +1440,28 @@
     </div>
 
     <script type="module" src="app.js"></script>
+    <script>
+        // The overview opens on a first visit (remembered per browser) and
+        // from the header; closing it pauses the reel.
+        (function () {
+            var intro = document.getElementById('intro');
+            var KEY = 'tudat-overview-seen';
+            function open() { intro.hidden = false; }
+            function close() {
+                intro.hidden = true;
+                var v = intro.querySelector('video');
+                if (v) v.pause();
+                try { localStorage.setItem(KEY, '1'); } catch (e) {}
+            }
+            var seen = false;
+            try { seen = localStorage.getItem(KEY) === '1'; } catch (e) {}
+            if (!seen) open();
+            document.querySelector('[data-intro-open]').addEventListener('click', open);
+            intro.querySelector('[data-intro-close]').addEventListener('click', close);
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !intro.hidden) close(); });
+        })();
+    </script>
+    <script src="media/reel/reel.js" defer></script>
+    <script src="assets/ai-credits/ai-credits.js" defer></script>
 </body>
 </html>

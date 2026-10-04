@@ -551,8 +551,8 @@ class TudatTestRunner {
         this.styleAnimationWidgets();
 
         // Dark space background
-        this.viewer.scene.backgroundColor = Cesium.Color.fromCssColorString('#020408');
-        this.viewer.scene.globe.baseColor = Cesium.Color.fromCssColorString('#0a1428');
+        this.viewer.scene.backgroundColor = Cesium.Color.fromCssColorString('#000000');
+        this.viewer.scene.globe.baseColor = Cesium.Color.fromCssColorString('#0b0b0c');
 
         // Enable lighting for day/night effect
         this.viewer.scene.globe.enableLighting = true;
@@ -680,7 +680,7 @@ class TudatTestRunner {
             polyline: {
                 positions: diskPositions,
                 width: 10,
-                material: Cesium.Color.fromCssColorString('#00f0ff').withAlpha(0.15)
+                material: Cesium.Color.fromCssColorString('#f5a524').withAlpha(0.15)
             }
         });
     }
@@ -1534,7 +1534,7 @@ class TudatTestRunner {
                 inclination: 28.5,
                 raan: 0,
                 argPeriapsis: 0,
-                color: '#00f0ff',
+                color: '#f5a524',
                 period: period,
                 description: category + '\n' + testName
             });
@@ -1913,7 +1913,7 @@ class TudatTestRunner {
             polyline: {
                 positions: [new Cesium.Cartesian3(earthRadius, 0, 0), new Cesium.Cartesian3(axisLength, 0, 0)],
                 width: 5,
-                material: Cesium.Color.CYAN
+                material: Cesium.Color.fromCssColorString('#f5a524')
             }
         });
         this.orbitEntities.push(xAxisEq);
@@ -1924,7 +1924,7 @@ class TudatTestRunner {
             polyline: {
                 positions: [new Cesium.Cartesian3(0, earthRadius, 0), new Cesium.Cartesian3(0, axisLength, 0)],
                 width: 4,
-                material: Cesium.Color.CYAN.withAlpha(0.7)
+                material: Cesium.Color.fromCssColorString('#f5a524').withAlpha(0.7)
             }
         });
         this.orbitEntities.push(yAxisEq);
@@ -1935,7 +1935,7 @@ class TudatTestRunner {
             polyline: {
                 positions: [new Cesium.Cartesian3(0, 0, earthRadius), new Cesium.Cartesian3(0, 0, axisLength)],
                 width: 4,
-                material: Cesium.Color.CYAN.withAlpha(0.7)
+                material: Cesium.Color.fromCssColorString('#f5a524').withAlpha(0.7)
             }
         });
         this.orbitEntities.push(zAxisEq);
@@ -1955,7 +1955,7 @@ class TudatTestRunner {
             polyline: {
                 positions: eqPositions,
                 width: 2,
-                material: Cesium.Color.CYAN.withAlpha(0.5)
+                material: Cesium.Color.fromCssColorString('#f5a524').withAlpha(0.5)
             }
         });
         this.orbitEntities.push(eqPlane);
@@ -2031,7 +2031,7 @@ class TudatTestRunner {
             label: {
                 text: 'J2000 Z\n(Celestial Pole)',
                 font: '12px monospace',
-                fillColor: Cesium.Color.CYAN,
+                fillColor: Cesium.Color.fromCssColorString('#f5a524'),
                 heightReference: Cesium.HeightReference.NONE
             }
         });
@@ -2080,7 +2080,7 @@ class TudatTestRunner {
             label: {
                 text: 'Equatorial Plane',
                 font: '11px monospace',
-                fillColor: Cesium.Color.CYAN,
+                fillColor: Cesium.Color.fromCssColorString('#f5a524'),
                 heightReference: Cesium.HeightReference.NONE
             }
         });
@@ -2118,7 +2118,7 @@ class TudatTestRunner {
             polyline: {
                 positions: eqPositions,
                 width: 2,
-                material: Cesium.Color.CYAN.withAlpha(0.6)
+                material: Cesium.Color.fromCssColorString('#f5a524').withAlpha(0.6)
             }
         });
         this.orbitEntities.push(eqPlane);
@@ -2149,7 +2149,7 @@ class TudatTestRunner {
             label: {
                 text: 'Equatorial',
                 font: '10px monospace',
-                fillColor: Cesium.Color.CYAN,
+                fillColor: Cesium.Color.fromCssColorString('#f5a524'),
                 heightReference: Cesium.HeightReference.NONE
             }
         });
@@ -2191,8 +2191,8 @@ class TudatTestRunner {
                     { name: 'L1', pos: new Cesium.Cartesian3(lpData[0] * moonDist * 1000, lpData[1] * moonDist * 1000, lpData[2] * moonDist * 1000), color: Cesium.Color.RED },
                     { name: 'L2', pos: new Cesium.Cartesian3(lpData[3] * moonDist * 1000, lpData[4] * moonDist * 1000, lpData[5] * moonDist * 1000), color: Cesium.Color.RED },
                     { name: 'L3', pos: new Cesium.Cartesian3(lpData[6] * moonDist * 1000, lpData[7] * moonDist * 1000, lpData[8] * moonDist * 1000), color: Cesium.Color.RED },
-                    { name: 'L4', pos: new Cesium.Cartesian3(lpData[9] * moonDist * 1000, lpData[10] * moonDist * 1000, lpData[11] * moonDist * 1000), color: Cesium.Color.LIME },
-                    { name: 'L5', pos: new Cesium.Cartesian3(lpData[12] * moonDist * 1000, lpData[13] * moonDist * 1000, lpData[14] * moonDist * 1000), color: Cesium.Color.LIME }
+                    { name: 'L4', pos: new Cesium.Cartesian3(lpData[9] * moonDist * 1000, lpData[10] * moonDist * 1000, lpData[11] * moonDist * 1000), color: Cesium.Color.fromCssColorString('#59d9ff') },
+                    { name: 'L5', pos: new Cesium.Cartesian3(lpData[12] * moonDist * 1000, lpData[13] * moonDist * 1000, lpData[14] * moonDist * 1000), color: Cesium.Color.fromCssColorString('#59d9ff') }
                 ];
             } catch (e) {
                 this.log('Tudat libration points failed: ' + e.message + ', using JS fallback', 'warning');
@@ -2214,8 +2214,8 @@ class TudatTestRunner {
                 { name: 'L1', pos: new Cesium.Cartesian3(L1x * 1000, 0, 0), color: Cesium.Color.RED },
                 { name: 'L2', pos: new Cesium.Cartesian3(L2x * 1000, 0, 0), color: Cesium.Color.RED },
                 { name: 'L3', pos: new Cesium.Cartesian3(L3x * 1000, 0, 0), color: Cesium.Color.RED },
-                { name: 'L4', pos: new Cesium.Cartesian3(L4x * 1000, L4y * 1000, 0), color: Cesium.Color.LIME },
-                { name: 'L5', pos: new Cesium.Cartesian3(L4x * 1000, L5y * 1000, 0), color: Cesium.Color.LIME }
+                { name: 'L4', pos: new Cesium.Cartesian3(L4x * 1000, L4y * 1000, 0), color: Cesium.Color.fromCssColorString('#59d9ff') },
+                { name: 'L5', pos: new Cesium.Cartesian3(L4x * 1000, L5y * 1000, 0), color: Cesium.Color.fromCssColorString('#59d9ff') }
             ];
         }
 
@@ -2251,7 +2251,7 @@ class TudatTestRunner {
             label: {
                 text: 'Earth',
                 font: '12px monospace',
-                fillColor: Cesium.Color.CYAN,
+                fillColor: Cesium.Color.fromCssColorString('#f5a524'),
                 pixelOffset: new Cesium.Cartesian2(0, 20)
             }
         });
@@ -2273,9 +2273,9 @@ class TudatTestRunner {
                     earthRadius + atmosphereHeight,
                     earthRadius + atmosphereHeight
                 ),
-                material: Cesium.Color.CYAN.withAlpha(0.1),
+                material: Cesium.Color.fromCssColorString('#f5a524').withAlpha(0.1),
                 outline: true,
-                outlineColor: Cesium.Color.CYAN.withAlpha(0.3)
+                outlineColor: Cesium.Color.fromCssColorString('#f5a524').withAlpha(0.3)
             }
         });
         this.orbitEntities.push(atmosphereEntity);
@@ -2433,7 +2433,7 @@ class TudatTestRunner {
             orientation: new Cesium.VelocityOrientationProperty(j2Positions),
             point: {
                 pixelSize: 12,
-                color: Cesium.Color.CYAN,
+                color: Cesium.Color.fromCssColorString('#f5a524'),
                 outlineColor: Cesium.Color.WHITE,
                 outlineWidth: 2
             },
@@ -2444,13 +2444,13 @@ class TudatTestRunner {
                 width: 2,
                 material: new Cesium.PolylineGlowMaterialProperty({
                     glowPower: 0.3,
-                    color: Cesium.Color.CYAN
+                    color: Cesium.Color.fromCssColorString('#f5a524')
                 })
             },
             label: {
                 text: 'J2',
                 font: '12px monospace',
-                fillColor: Cesium.Color.CYAN,
+                fillColor: Cesium.Color.fromCssColorString('#f5a524'),
                 pixelOffset: new Cesium.Cartesian2(0, -15)
             },
             viewFrom: new Cesium.Cartesian3(-50000, 0, -20000)
@@ -2465,7 +2465,7 @@ class TudatTestRunner {
             orientation: new Cesium.VelocityOrientationProperty(fullForcePositions),
             point: {
                 pixelSize: 12,
-                color: Cesium.Color.LIME,
+                color: Cesium.Color.fromCssColorString('#59d9ff'),
                 outlineColor: Cesium.Color.WHITE,
                 outlineWidth: 2
             },
@@ -2476,13 +2476,13 @@ class TudatTestRunner {
                 width: 2,
                 material: new Cesium.PolylineGlowMaterialProperty({
                     glowPower: 0.3,
-                    color: Cesium.Color.LIME
+                    color: Cesium.Color.fromCssColorString('#59d9ff')
                 })
             },
             label: {
                 text: 'Full Force',
                 font: '12px monospace',
-                fillColor: Cesium.Color.LIME,
+                fillColor: Cesium.Color.fromCssColorString('#59d9ff'),
                 pixelOffset: new Cesium.Cartesian2(0, -15)
             }
         });
@@ -2614,7 +2614,7 @@ class TudatTestRunner {
             orientation: new Cesium.VelocityOrientationProperty(ommPositions),
             point: {
                 pixelSize: 12,
-                color: Cesium.Color.CYAN,
+                color: Cesium.Color.fromCssColorString('#f5a524'),
                 outlineColor: Cesium.Color.WHITE,
                 outlineWidth: 2
             },
@@ -2625,13 +2625,13 @@ class TudatTestRunner {
                 width: 2,
                 material: new Cesium.PolylineGlowMaterialProperty({
                     glowPower: 0.3,
-                    color: Cesium.Color.CYAN
+                    color: Cesium.Color.fromCssColorString('#f5a524')
                 })
             },
             label: {
                 text: 'OMM',
                 font: '12px monospace',
-                fillColor: Cesium.Color.CYAN,
+                fillColor: Cesium.Color.fromCssColorString('#f5a524'),
                 pixelOffset: new Cesium.Cartesian2(0, -15)
             },
             viewFrom: new Cesium.Cartesian3(-50000, 0, -20000)
@@ -2646,7 +2646,7 @@ class TudatTestRunner {
             orientation: new Cesium.VelocityOrientationProperty(j2Positions),
             point: {
                 pixelSize: 12,
-                color: Cesium.Color.LIME,
+                color: Cesium.Color.fromCssColorString('#59d9ff'),
                 outlineColor: Cesium.Color.WHITE,
                 outlineWidth: 2
             },
@@ -2657,13 +2657,13 @@ class TudatTestRunner {
                 width: 2,
                 material: new Cesium.PolylineGlowMaterialProperty({
                     glowPower: 0.3,
-                    color: Cesium.Color.LIME
+                    color: Cesium.Color.fromCssColorString('#59d9ff')
                 })
             },
             label: {
                 text: 'J2',
                 font: '12px monospace',
-                fillColor: Cesium.Color.LIME,
+                fillColor: Cesium.Color.fromCssColorString('#59d9ff'),
                 pixelOffset: new Cesium.Cartesian2(0, -15)
             }
         });
@@ -2776,7 +2776,7 @@ class TudatTestRunner {
         ctx.clearRect(0, 0, width, height);
 
         // Background grid
-        ctx.strokeStyle = 'rgba(148, 163, 184, 0.1)';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
         ctx.lineWidth = 1;
         for (let i = 0; i <= 4; i++) {
             const y = padding.top + (plotHeight * i / 4);
@@ -2787,7 +2787,7 @@ class TudatTestRunner {
         }
 
         // Y-axis labels
-        ctx.fillStyle = '#64748b';
+        ctx.fillStyle = '#8e8e93';
         ctx.font = '10px monospace';
         ctx.textAlign = 'right';
         for (let i = 0; i <= 4; i++) {
@@ -2812,7 +2812,7 @@ class TudatTestRunner {
         }
 
         // Draw separation line
-        ctx.strokeStyle = '#f59e0b';
+        ctx.strokeStyle = '#59d9ff';
         ctx.lineWidth = 1.5;
         ctx.beginPath();
         for (let i = 0; i < separationData.length; i++) {
@@ -2839,7 +2839,7 @@ class TudatTestRunner {
         const cursorX = padding.left + fraction * plotWidth;
 
         // Draw cursor line
-        ctx.strokeStyle = '#00f0ff';
+        ctx.strokeStyle = '#f5a524';
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.moveTo(cursorX, padding.top);
@@ -2852,13 +2852,13 @@ class TudatTestRunner {
             const sep = this.separationChart.separationData[idx].separation;
             const cursorY = padding.top + plotHeight - (sep * this.separationChart.yScale);
 
-            ctx.fillStyle = '#00f0ff';
+            ctx.fillStyle = '#f5a524';
             ctx.beginPath();
             ctx.arc(cursorX, cursorY, 4, 0, Math.PI * 2);
             ctx.fill();
 
             // Show current value
-            ctx.fillStyle = '#00f0ff';
+            ctx.fillStyle = '#f5a524';
             ctx.font = 'bold 11px monospace';
             ctx.textAlign = 'left';
             let valText;
@@ -3058,7 +3058,7 @@ class TudatTestRunner {
         }
 
         // Create animated satellite following estimated trajectory
-        const satelliteColor = dynamicsModel === 'omm' ? Cesium.Color.CYAN : Cesium.Color.LIME;
+        const satelliteColor = dynamicsModel === 'omm' ? Cesium.Color.fromCssColorString('#f5a524') : Cesium.Color.fromCssColorString('#59d9ff');
         const dt = duration / (numSamples - 1);
         const clock = this.viewer.clock;
         const startTime = clock.startTime;
@@ -3093,7 +3093,7 @@ class TudatTestRunner {
                 leadTime: period,   // Show 1 revolution forward
                 trailTime: period,  // Show 1 revolution behind
                 width: 2,
-                material: Cesium.Color.LIME
+                material: Cesium.Color.fromCssColorString('#59d9ff')
             },
             label: {
                 text: dynamicsModel === 'omm' ? 'OMM' : 'Full Force',
@@ -3126,9 +3126,9 @@ class TudatTestRunner {
             orientation: new Cesium.VelocityOrientationProperty(estimatedSampledPosition),
             ellipsoid: {
                 radii: ellipsoidRadii,
-                material: Cesium.Color.CYAN.withAlpha(0.2),
+                material: Cesium.Color.fromCssColorString('#f5a524').withAlpha(0.2),
                 outline: true,
-                outlineColor: Cesium.Color.CYAN.withAlpha(0.6),
+                outlineColor: Cesium.Color.fromCssColorString('#f5a524').withAlpha(0.6),
                 outlineWidth: 1,
                 slicePartitions: 24,
                 stackPartitions: 24
@@ -3418,11 +3418,11 @@ class TudatTestRunner {
         const useLog = maxRMS / Math.max(minRMS, 1) > 100;
 
         // Background
-        ctx.fillStyle = '#0f172a';
+        ctx.fillStyle = '#0b0b0c';
         ctx.fillRect(0, 0, width, height);
 
         // Grid
-        ctx.strokeStyle = 'rgba(148, 163, 184, 0.1)';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
         ctx.lineWidth = 1;
         for (let i = 0; i <= 4; i++) {
             const y = padding.top + (plotHeight * i / 4);
@@ -3433,7 +3433,7 @@ class TudatTestRunner {
         }
 
         // Y-axis labels (RMS)
-        ctx.fillStyle = '#64748b';
+        ctx.fillStyle = '#8e8e93';
         ctx.font = '10px monospace';
         ctx.textAlign = 'right';
         for (let i = 0; i <= 4; i++) {
@@ -3463,7 +3463,7 @@ class TudatTestRunner {
         ctx.fillText('Iteration', padding.left + plotWidth / 2, height - 5);
 
         // Draw RMS convergence line
-        ctx.strokeStyle = '#f59e0b';
+        ctx.strokeStyle = '#59d9ff';
         ctx.lineWidth = 2;
         ctx.beginPath();
         for (let i = 0; i < iterations.length; i++) {
@@ -3483,7 +3483,7 @@ class TudatTestRunner {
         ctx.stroke();
 
         // Draw points
-        ctx.fillStyle = '#f59e0b';
+        ctx.fillStyle = '#59d9ff';
         for (let i = 0; i < iterations.length; i++) {
             const x = padding.left + (i / Math.max(iterations.length - 1, 1)) * plotWidth;
             let y;
@@ -3513,7 +3513,7 @@ class TudatTestRunner {
             }
 
             if (noiseY > padding.top && noiseY < height - padding.bottom) {
-                ctx.strokeStyle = '#22c55e';
+                ctx.strokeStyle = '#f5a524';
                 ctx.lineWidth = 1;
                 ctx.setLineDash([5, 5]);
                 ctx.beginPath();
@@ -3522,16 +3522,16 @@ class TudatTestRunner {
                 ctx.stroke();
                 ctx.setLineDash([]);
 
-                ctx.fillStyle = '#22c55e';
+                ctx.fillStyle = '#f5a524';
                 ctx.textAlign = 'left';
                 ctx.fillText('Noise floor', padding.left + 5, noiseY - 5);
             }
         }
 
         // Legend
-        ctx.fillStyle = '#f59e0b';
+        ctx.fillStyle = '#59d9ff';
         ctx.fillRect(width - 100, padding.top + 5, 12, 12);
-        ctx.fillStyle = '#94a3b8';
+        ctx.fillStyle = '#8e8e93';
         ctx.textAlign = 'left';
         ctx.fillText('RMS Residual', width - 85, padding.top + 14);
     }
@@ -3692,11 +3692,11 @@ class TudatTestRunner {
         const depPoint = this.viewer.entities.add({
             name: 'Departure',
             position: new Cesium.Cartesian3(r1.x * 1000, r1.y * 1000, r1.z * 1000),
-            point: { pixelSize: 12, color: Cesium.Color.LIME },
+            point: { pixelSize: 12, color: Cesium.Color.fromCssColorString('#59d9ff') },
             label: {
                 text: 'Departure\nV = (2736, 6594) m/s',
                 font: '10px monospace',
-                fillColor: Cesium.Color.LIME,
+                fillColor: Cesium.Color.fromCssColorString('#59d9ff'),
                 pixelOffset: new Cesium.Cartesian2(15, 0)
             }
         });
@@ -3728,7 +3728,7 @@ class TudatTestRunner {
                     new Cesium.Cartesian3(r1.x * 1000 + depVel.x * vScale, r1.y * 1000 + depVel.y * vScale, 0)
                 ],
                 width: 3,
-                material: Cesium.Color.LIME
+                material: Cesium.Color.fromCssColorString('#59d9ff')
             }
         });
         this.orbitEntities.push(depVelArrow);
@@ -4731,14 +4731,14 @@ class TudatTestRunner {
 
     setupCharts() {
         this.chartColors = {
-            cyan: '#00f0ff',
-            purple: '#8b5cf6',
-            green: '#00ff9d',
-            red: '#ff3366',
-            orange: '#ff9f1c',
-            yellow: '#ffd93d',
-            dim: '#4a6066',
-            bg: '#0d1620'
+            cyan: '#f5a524',
+            purple: '#59d9ff',
+            green: '#f5a524',
+            red: '#ff3b30',
+            orange: '#f5a524',
+            yellow: '#f5a524',
+            dim: '#6e6e73',
+            bg: '#161617'
         };
 
         // D3 chart container (may not exist if using orbit selector instead)
